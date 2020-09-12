@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from safira.api.manager import SafraAPI
+from safira.models import Transacao
 
 def home(request):
     return render(request,'safira/home.html')
@@ -59,5 +60,8 @@ def dashboard(request):
         request.session['usuario']["saldo"] = saldo_infos['Amount']["Amount"]
         request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
 
+    context = request.session['usuario'].copy()
+    
+    context['linhas_tabela'] = Transacao.objects.filter(id=1).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')
 
-    return render(request,'safira/dashboard.html', context=request.session['usuario'].copy())
+    return render(request,'safira/dashboard.html', context=context)
