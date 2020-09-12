@@ -9,7 +9,7 @@ class Cliente(models.Model):
         FEMININO = "F", _("Feminino")
 
 
-    id = models.BigAutoField(primary_key=True, unique=True)
+    account_id = models.CharField(verbose_name="Account_id", primary_key=True, unique=True, max_length=15)
     nome = models.CharField("Nome Completo", max_length=128)
     email = models.EmailField("Email")
     renda = models.FloatField("Renda Mensal")

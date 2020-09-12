@@ -102,32 +102,31 @@
                         <h2>Sua Linha de Crédito: <span style="color:green"> R$ {{linha_credito|intcomma}} </span></h1>
                     </div>
 
-
-                    <div class="row" style="margin-top: 0.5%;">
-                        <h2>Últimas transações</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Data</th>
-                                    <th scope="col">Mecanismo de transação</th>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for linha in linhas_tabela %}
-                                    <tr>
-                                        <th scope="row">{{linha.data}}</th>
-                                        <td>{{linha.tipo}}</td>
-                                        <td>{{linha.informacoes}}</td>
-                                        <td>{{linha.valor}}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </section>
+        </div>
+        <div class="row" style="margin-top: 0.5%;padding-right: 15px">
+            <h2>Últimas transações</h2>
+            <table class="table table-striped" style="padding-right: 15px">
+                <thead>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Mecanismo de transação</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in linhas_tabela %}
+                        <tr>
+                            <th scope="row">{{linha.data}}</th>
+                            <td>{{linha.tipo}}</td>
+                            <td>{{linha.informacoes}}</td>
+                            <td>{{linha.valor}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 

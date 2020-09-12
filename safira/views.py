@@ -62,6 +62,6 @@ def dashboard(request):
 
     context = request.session['usuario'].copy()
     
-    context['linhas_tabela'] = Transacao.objects.filter(id=1).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')
+    context['linhas_tabela'] = Transacao.objects.filter(cliente=account_id).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')
 
     return render(request,'safira/dashboard.html', context=context)
