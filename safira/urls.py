@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from safira.views import home, index
+from safira.views import home, index, login, dashboard
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('index', index),
+    path('login', login),
+    path('dashboard', dashboard)
 ]

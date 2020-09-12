@@ -6,3 +6,9 @@ def home(request):
     
 def index(request):
     return render(request,'safira/index.html')
+       
+def login(request):
+    return render(request,'safira/login.html')
+
+def dashboard(request):
+    return render(request,'safira/dashboard.html')
