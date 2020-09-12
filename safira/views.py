@@ -25,8 +25,15 @@ def login(request):
         # Verifica se o account_id existe
         try:
             if client_data:
+                request.session['usuario'] = {}
                 account_info = client_data['Data']['Account'][0]
-                return dashboard(request, dados = account_info)
+                
+                # Grava na sessao do usuario suas principais informacoes
+                request.session['usuario']['Nickname'] = account_info.get('Nickname', "")
+                request.session['usuario']['Account'] = account_info.get('Account', {}).get("Name", "")
+                request.session['usuario']['AccountId'] = account_info.get('AccountId', '')
+
+                return redirect('/dashboard')
             else:
                 return _login(request, context={'msg': "Cliente não encontrado"})
         except Exception as error:
@@ -37,24 +44,20 @@ def login(request):
 
 
 
-def dashboard(request, dados: dict= {}):
-    if not dados:
+def dashboard(request):
+    account_id = request.session.get('usuario', {}).get('AccountId', {})
+    if not account_id:
         return redirect('/login')
-
-    # Obtem informacoes do Dashboard
-    context = {}
-    context['nickname'] = dados.get('Nickname', "")
-    context['nome_completo'] = dados.get('Account', {}).get("Name", "")
-    context['account_id'] = dados.get('AccountId', '')
     
     safra_api = SafraAPI()
 
-    saldo_conta = safra_api.saldo_conta(context['account_id'])
+    # Obtem informacoes do saldo da conta do cliente
+    saldo_conta = safra_api.saldo_conta(account_id)
 
     if saldo_conta:
         saldo_infos = saldo_conta['Data']['Balance'][0]
-        context["saldo"] = saldo_infos['Amount']["Amount"]
-        context["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
+        request.session['usuario']["saldo"] = saldo_infos['Amount']["Amount"]
+        request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
 
 
-    return render(request,'safira/dashboard.html', context=context)
+    return render(request,'safira/dashboard.html', context=request.session['usuario'].copy())
