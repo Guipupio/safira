@@ -108,8 +108,8 @@
         <div class="modal-inner">
             <h3 id="Resposta-analise"></h3>
             <div class="d-flex justify-content-around">
-                <button type="button" class="btn btn-primary" style="background-color: #1E2044;color: #fff; cursor: pointer;">Gostei deste perfil!</button>
-                <button type="button" class="btn" style="background: rgb(212, 173, 104);">Esse não é meu Perfil</button>
+                <button type="button" class="btn btn-primary botao-gostei" style="background-color: #1E2044;color: #fff; cursor: pointer;">Gostei deste perfil!</button>
+                <button type="button" class="btn botao-nao-gostei" style="background: rgb(212, 173, 104);">Esse não é meu Perfil</button>
             </div>
         </div>
     </div>
@@ -235,7 +235,19 @@
 
         const cardButton = document.querySelector(".card-button");
         const modalOuter = document.querySelector('.modal-outer');
+        
+        const botaoGostei = document.querySelector('.botao-gostei');
+        const botaoNaoGostei = document.querySelector('.botao-nao-gostei');
+        
 
+        botaoGostei.addEventListener('click', function () {
+            closeModal();
+        })
+        
+        botaoNaoGostei.addEventListener('click', function () {
+            closeModal();
+        })
+        
         cardButton.addEventListener('click', function () {
             show_perfil();
         })
