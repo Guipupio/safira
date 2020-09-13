@@ -46,9 +46,3 @@ def funcao_do_custodio(df):
     analise = pkl_lucas.predict(features)
 
     return analise
-
-    from safira.analytics.manager import *
-    model = joblib.load('safira/analytics/model_sklearn.pickle')
-    
-
-    # df[['CreditDebitIndicator', 'amount', 'transactionInformation', 'accountID', 'valueDateTime']]
