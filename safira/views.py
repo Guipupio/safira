@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 
 from safira.analytics.manager import requisitar_analise
 from safira.api.manager import SafraAPI
-from safira.models import Transacao
+from safira.models import Transacao, Cliente
 from safira.utils import get_historico_transacoes
 
 
@@ -82,7 +82,12 @@ def dashboard(request):
         saldo_infos = saldo_conta['Data']['Balance'][0]
         request.session['usuario']["saldo"] = saldo_infos['Amount']["Amount"]
         request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
-
+    
+    # Registra e atualiza o limite de credito do cliente no banco de dados, para utilizacao nos modelos
+    cliente = Cliente.objects.get(account_id=account_id)
+    cliente.limite_credito = request.session['usuario']["linha_credito"]
+    cliente.save()
+    
     context = request.session['usuario'].copy()
     context['linhas_tabela'] = get_historico_transacoes(safra_api, account_id, 10)
     

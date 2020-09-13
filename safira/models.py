@@ -16,6 +16,8 @@ class Cliente(models.Model):
     telefone = models.CharField("Telefone", max_length=14)
     data_nascimento = models.DateField("Data de Nascimento")
     sexo = models.CharField("Sexo", choices=sexo_choices.choices, max_length=32)
+    perfil_investidor =  models.CharField("Perfil de Investidor", null=True, max_length=48)
+    limite_credito = models.FloatField("Limite de Crédito", null=True)
 
 
 class Transacao(models.Model):
