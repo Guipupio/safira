@@ -1,35 +1,68 @@
+{% load humanize %}
+
+{% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="estilo.css" rel="stylesheet">
     <title>Safira</title>
 </head>
+
 <body>
 
     <style>
-     section{
-         height: 400px;
-     }
-     #capa{
-        display: flex;
-    justify-content: center;
-    align-items: center;
-     }
+        #capa {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        /*---- Estilo Modal --*/
+
+        .modal-outer {
+            display: grid;
+            background: hsla(50, 100%, 50%, 0.7);
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        .modal-outer.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-inner {
+            max-width: 600px;
+            min-width: 400px;
+            padding: 2rem;
+            border-radius: 5px;
+            min-height: 200px;
+            background: white;
+        }
     </style>
 
 
     <!------ Menu ------->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#1E2044">
-            <a class="navbar-brand " style="display: flex;color:#242F73" ></a> 
-                <img src="images/escola.png" style="width: 40px" d-inline-block align-top" alt="" loading="lazy">
-                <h4 class="brand-name" style="MARGIN-LEFT: 12PX; color:white">Safira</h4>
+            <a class="navbar-brand " style="display: flex;color:#242F73"></a>
+            <img src="{% static '/static/safira/img/safraLogo.png' %}" style="width: 40px" d-inline-block align-top"
+                alt="" loading="lazy">
+            <h4 class="brand-name" style="MARGIN-LEFT: 12PX; color:white">Safira</h4>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,109 +71,156 @@
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link"  style="color:white" href="#banner">Tecnologia</a>
+                        <a class="nav-link" style="color:white" href="#banner">Tecnologia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  style="color:white"  href="#about">Register</a>
+                        <a class="nav-link" style="color:white" href="#about">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white"  href="#contact">Login</a>
+                        <a class="nav-link" style="color:white" href="#contact">Login</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-
-
-   <!------ Bloco ------->
-
-    <section id="capa">
-        <div class="container infos-inicial ">
-            <div class="row align-items-center">
-                <h1>Saldo</h1>
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-            </div>
-        </div>
-    </section>
+    <!------ Bloco ------->
+    <div class="alert alert-primary" role="alert">
+        Você gostaria informações e dicas sobre seus
+        gastos baseado na nossa inteligência
+        artificial ?
+        <button type="button" class="btn btn-primary card-button">Aceitar</button>
+        <button type="button" class="btn btn-danger">Recusar</button>
+    </div>
 
 
     <!------ Bloco ------->
-
-    <section class="container infos-inicial d-flex justify-content-center">
-            <div class="col-lg-6 col-md-6 banner-img">
-                <h3>Você gostaria informações e dicas sobre seus 
-                    gastos baseado na nossa inteligência
-                    artificial ?
-                </h3>
-                <div class="d-flex justify-content-around">
-                    <button type="button" class="btn btn-primary">Aceitar</button>
-                    <button type="button" class="btn btn-danger">Recusar</button>
-                </div>
-            </div>
-    </section>
-
-    <!------ Bloco ------->
-
+    <!-- 
     <section class="container infos-inicial d-flex justify-content-center">
         <div class="col-lg-6 col-md-6 banner-img">
-            <h3>Olá Fulano de Tal avalie seu perfil e você é to tipo <strong>MODERADO</strong>
+            <h3>Você gostaria informações e dicas sobre seus
+                gastos baseado na nossa inteligência
+                artificial ?
+            </h3>
+            <div class="d-flex justify-content-around">
+                <button type="button" class="btn btn-primary">Aceitar</button>
+                <button type="button" class="btn btn-danger">Recusar</button>
+            </div>
+        </div>
+    </section> -->
+
+    <!------ Modal ------->
+
+
+    <div class="modal-outer">
+        <div class="modal-inner">
+            <h3>Olá {{Nickname}} avalie seu perfil e você é to tipo <strong>{{perfil_investidor}}</strong>
             </h3>
             <div class="d-flex justify-content-around">
                 <button type="button" class="btn btn-primary">Opa Gostei</button>
                 <button type="button" class="btn btn-danger">Esse não é meu Perfil</button>
             </div>
         </div>
-    </section>
+    </div>
+    <!------ Bloco ------->
+    <div class="container">
+        <div class="row">
+            <section id="capa">
+                <div class="container infos-inicial ">
+                    <div class="row" style="margin-top: 7%;margin-bottom: 5.5%;">
+                        <h1>Olá {{Nickname}},</h1>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 2.5%;">
+                        <h2>Seu saldo é: <span {% if not '-' in saldo %} style="color:green" {% else %}
+                                style="color:red" {% endif %}> R$ {{saldo|intcomma}} </span></h1>
+                    </div>
+                    <div class="row" style="margin-bottom: 3.5%;">
+                        <h2>Sua Linha de Crédito: <span style="color:green"> R$ {{linha_credito|intcomma}} </span></h1>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+        <div class="row" style="margin-top: 0.5%;padding-right: 15px">
+            <h2>Últimas transações</h2>
+            <table class="table table-striped" style="padding-right: 15px">
+                <thead>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Crédito/Débito </th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in linhas_tabela %}
+                    <tr>
+                        <th scope="row">{{linha.data}}</th>
+                        <td>{{linha.tipo}}</td>
+                        <td>{{linha.informacoes}}</td>
+                        <td>{{linha.valor}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-   
 
 
     <!------ Bloco ------->
 
 
-    <footer class=" text-center container d-flex justify-content-center" id="contact" >
+    <!-- <footer class=" text-center container d-flex justify-content-center" id="contact">
         <div class="row">
 
-                <p>Time 18</p>
-                <p>Safira Beta  &copy;</p>
-                <p>Inteligência Artificial</p>
-            </div>
-            
+            <p>Time 18</p>
+            <p>Safira Beta &copy;</p>
+            <p>Inteligência Artificial</p>
         </div>
-    </footer>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+        </div>
+    </footer> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script>
+        function show_perfil() {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'api_analise' AccountId %}",
+                success: function (response) {
+                    alert(response.account_id)
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+
+        const cardButton = document.querySelector(".card-button");
+        const modalOuter = document.querySelector('.modal-outer');
+
+        cardButton.addEventListener('click', function () {
+            modalOuter.classList.add('open');
+        })
+
+        function closeModal() {
+            modalOuter.classList.remove('open');
+        }
+
+    </script>
+
 </body>
+
 </html>
