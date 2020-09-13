@@ -20,7 +20,8 @@ def index(request):
 
 def logout(request):
     request.session['usuario'] = {}
-    redirect('/login')
+    return redirect('/login')
+
 
 
 def login(request):
@@ -31,7 +32,7 @@ def login(request):
     if request.method == "GET":
 
         # Verificamos se o Usuario já nao esta logado
-        if request.session.get('usuario', {}):
+        if not request.session.get('usuario', {}):
             return _login(request)
         else:
             return redirect('/dashboard')
@@ -66,7 +67,9 @@ def login(request):
 
 
 def dashboard(request):
+    # Simula um comportamento de Middleware
     account_id = request.session.get('usuario', {}).get('AccountId', {})
+    
     if not account_id:
         return redirect('/login')
     

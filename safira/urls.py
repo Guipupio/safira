@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from safira.views import home, index, login, dashboard, requisitar_perfil
+from safira.views import home, index, login, dashboard, requisitar_perfil, logout
 
 app_name = 'safira'
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     path('', home),
     path('index', index),
     path('login', login),
+    path('logout', logout, name='logout'),
     path('dashboard', dashboard),
     path('safira/v1/analise-perfil/<slug:account_id>', requisitar_perfil, name='api_analise'),
 
