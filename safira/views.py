@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 
 from safira.api.manager import SafraAPI
 from safira.models import Transacao
+from safira.analytics.manager import requisitar_analise
+from safira.utils import get_historico_transacoes
 
 
 def home(request):
@@ -77,22 +79,18 @@ def dashboard(request):
         request.session['usuario']["saldo"] = saldo_infos['Amount']["Amount"]
         request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
 
-    transacao = safra_api.transacoes_conta(account_id)
-
-    api_transacoes = []
-    if transacao:
-         for _transacao in transacao['data']['transaction']:
-             api_transacoes.append(
-                 {
-                    'tipo': _transacao['creditDebitIndicator'],
-                    'data': datetime.strptime(_transacao['valueDateTime'], "%Y-%m-%dT%H:%M:%S%Z:00"),
-                    'informacoes': _transacao['transactionInformation'],
-                    'valor': float(_transacao['amount']['amount']),
-                }
-            )
-    
     context = request.session['usuario'].copy()
-    context['linhas_tabela'] = api_transacoes
-    context['linhas_tabela'] += Transacao.objects.filter(cliente=account_id).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')[:max(0, 10 - len(api_transacoes))]
+    context['linhas_tabela'] = get_historico_transacoes(safra_api, account_id, 10)
 
     return render(request,'safira/dashboard.html', context=context)
+
+
+def requisitar_perfil(request, account_id: str):
+    """Utiliza o Modelo já treinado para inferir o perfil do cliente
+
+    Args:
+        request (request): requisicao
+        account_id (str): identificador do cliente
+    """
+    dados = {'account_id': account_id}
+    return JsonResponse(dados)
