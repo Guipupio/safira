@@ -84,7 +84,7 @@ def dashboard(request):
         request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
 
     context = request.session['usuario'].copy()
-    context['linhas_tabela'] = get_historico_transacoes(safra_api, account_id, 10)
+    context['linhas_tabela'] = [] #get_historico_transacoes(safra_api, account_id, 10)
     
     context['perfil_investidor'] = random.choices(["dinâmico", "conservador","ultra conservador", "moderado"])[0]
 

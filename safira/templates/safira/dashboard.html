@@ -27,7 +27,8 @@
 
         .modal-outer {
             display: grid;
-            background: hsla(50, 100%, 50%, 0.7);
+            /* background: hsla(50, 100%, 50%, 0.7); */
+            background:hsla(143, 5%, 80%, 0.7);
             position: fixed;
             height: 100vh;
             width: 100vw;
@@ -60,7 +61,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#1E2044">
             <a class="navbar-brand " style="display: flex;color:#242F73"></a>
-            <img src="{% static '/static/safira/img/safraLogo.png' %}" style="width: 40px" d-inline-block align-top"
+            <img src="{% static '/static/safira/img/safiraLogo.svg' %}" style="width: 40px" d-inline-block align-top"
                 alt="" loading="lazy">
             <h4 class="brand-name" style="MARGIN-LEFT: 12PX; color:white">Safira</h4>
             </a>
@@ -71,13 +72,7 @@
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="#banner">Tecnologia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="#about">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color:white" href="#contact">Login</a>
+                        <a class="nav-link" style="color:white" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
