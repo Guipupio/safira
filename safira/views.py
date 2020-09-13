@@ -103,5 +103,8 @@ def requisitar_perfil(request, account_id: str):
         request (request): requisicao
         account_id (str): identificador do cliente
     """
-    dados = {'account_id': account_id}
+    linha_credito = request.POST.get('linha_credito')
+
+    analise = requisitar_analise(account_id, linha_credito)
+    dados = {'recomendacao_safira': analise}
     return JsonResponse(dados)

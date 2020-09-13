@@ -27,7 +27,7 @@
 
         .modal-outer {
             display: grid;
-            background: hsla(50, 100%, 50%, 0.7);
+            background: hsl(274 1% 46% / 0.49);
             position: fixed;
             height: 100vh;
             width: 100vw;
@@ -46,12 +46,11 @@
         }
 
         .modal-inner {
-            max-width: 600px;
             min-width: 400px;
             padding: 2rem;
             border-radius: 5px;
             min-height: 200px;
-            background: white;
+            background: rgb(243, 243, 243);
         }
     </style>
 
@@ -113,11 +112,10 @@
 
     <div class="modal-outer">
         <div class="modal-inner">
-            <h3>Olá {{Nickname}} avalie seu perfil e você é to tipo <strong>{{perfil_investidor}}</strong>
-            </h3>
+            <h3 id="Resposta-analise"></h3>
             <div class="d-flex justify-content-around">
-                <button type="button" class="btn btn-primary">Opa Gostei</button>
-                <button type="button" class="btn btn-danger">Esse não é meu Perfil</button>
+                <button type="button" class="btn btn-primary" style="background-color: #1E2044;color: #fff; cursor: pointer;">Gostei deste perfil!</button>
+                <button type="button" class="btn" style="background: rgb(212, 173, 104);">Esse não é meu Perfil</button>
             </div>
         </div>
     </div>
@@ -131,7 +129,7 @@
                     </div>
 
                     <div class="row" style="margin-bottom: 2.5%;">
-                        <h2>Seu saldo é: <span {% if not '-' in saldo %} style="color:green" {% else %}
+                        <h3>Seu saldo é: <span {% if not '-' in saldo %} style="color:green" {% else %}
                                 style="color:red" {% endif %}> R$ {{saldo|intcomma}} </span></h1>
                     </div>
                     <div class="row" style="margin-bottom: 3.5%;">
@@ -195,12 +193,45 @@
 
 
     <script>
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
         function show_perfil() {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: "{% url 'api_analise' AccountId %}",
+                data: { csrfmiddlewaretoken: getCookie('csrftoken'), linha_credito: {{linha_credito}} },
                 success: function (response) {
-                    alert(response.account_id)
+                    document.querySelector("#Resposta-analise").innerHTML = `
+                    <ul class ="m-5" >
+                    <li class="m-4"> Olá {{Nickname}}, segundo minha avaliação você se encaixa no perfil <b>${response.recomendacao_safira}</b>! </li>
+
+                    <li class="m-4"> Caso tenha interesse em conhecer um pouco mais sobre os perfils mapeados pelo Safra, <a href="https://www.safra.com.br/central-de-conteudo/aprender/perfil-de-investidor-como-descobrir-o-meu.htm"> conheça mais aqui</a>! </li> 
+
+                    <li class="m-4"> Para conhecer os produtos e ofertas que só o Banco Safra oferece acesse o nosso <a href= "http://www.safraasset.com.br/fundos/home.asp">asset de investimentos</a>. </li>
+                    
+                    <li class="m-4"> Não deixe de conhecer as nossas especialistas e especialistas no assunto através do <a href = "https://www.safra.com.br/safra-invest.htm"> Safra Invest</a>! </li>
+                    
+                    Ei, para finalizar, me dê uma ajudinha avaliando se minha análise combina com você ;)
+                    
+                    </ul>
+                    `
+
+                    modalOuter.classList.add('open');
                 },
                 error: function (response) {
 
@@ -212,7 +243,7 @@
         const modalOuter = document.querySelector('.modal-outer');
 
         cardButton.addEventListener('click', function () {
-            modalOuter.classList.add('open');
+            show_perfil();
         })
 
         function closeModal() {
