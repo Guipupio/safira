@@ -1,11 +1,12 @@
+import random
 from datetime import datetime
 
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
+from safira.analytics.manager import requisitar_analise
 from safira.api.manager import SafraAPI
 from safira.models import Transacao
-from safira.analytics.manager import requisitar_analise
 from safira.utils import get_historico_transacoes
 
 
@@ -81,6 +82,8 @@ def dashboard(request):
 
     context = request.session['usuario'].copy()
     context['linhas_tabela'] = get_historico_transacoes(safra_api, account_id, 10)
+    
+    context['perfil_investidor'] = random.choices(["dinâmico", "conservador","ultra conservador", "moderado"])[0]
 
     return render(request,'safira/dashboard.html', context=context)
 
