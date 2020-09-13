@@ -1,20 +1,37 @@
+from datetime import datetime
+
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+
 from safira.api.manager import SafraAPI
 from safira.models import Transacao
 
+
 def home(request):
-    return render(request,'safira/home.html')
+    return redirect('/login')
     
+
 def index(request):
     return render(request,'safira/index.html')
-       
+
+
+def logout(request):
+    request.session['usuario'] = {}
+    redirect('/login')
+
+
 def login(request):
     def _login(request, context= {}):
         return render(request,'safira/login.html', context=context)
 
+    # Validamos uma requiscao GET
     if request.method == "GET":
-        return _login(request)
+
+        # Verificamos se o Usuario já nao esta logado
+        if request.session.get('usuario', {}):
+            return _login(request)
+        else:
+            return redirect('/dashboard')
 
     elif request.method == "POST":
         account_id = request.POST.get('codigo_cliente', '')
@@ -36,7 +53,7 @@ def login(request):
 
                 return redirect('/dashboard')
             else:
-                return _login(request, context={'msg': "Cliente não encontrado"})
+                return _login(request, context={'msg': "Ops! Cliente ID não encontrado!"})
         except Exception as error:
            return _login(request, context={'msg': "Ops, parece que estamos passando por alguma instabilidade", 'log': error.__str__()})
         
@@ -60,8 +77,22 @@ def dashboard(request):
         request.session['usuario']["saldo"] = saldo_infos['Amount']["Amount"]
         request.session['usuario']["linha_credito"] = saldo_infos['CreditLine'][0]["Amount"]["Amount"]
 
-    context = request.session['usuario'].copy()
+    transacao = safra_api.transacoes_conta(account_id)
+
+    api_transacoes = []
+    if transacao:
+         for _transacao in transacao['data']['transaction']:
+             api_transacoes.append(
+                 {
+                    'tipo': _transacao['creditDebitIndicator'],
+                    'data': datetime.strptime(_transacao['valueDateTime'], "%Y-%m-%dT%H:%M:%S%Z:00"),
+                    'informacoes': _transacao['transactionInformation'],
+                    'valor': float(_transacao['amount']['amount']),
+                }
+            )
     
-    context['linhas_tabela'] = Transacao.objects.filter(cliente=account_id).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')
+    context = request.session['usuario'].copy()
+    context['linhas_tabela'] = api_transacoes
+    context['linhas_tabela'] += Transacao.objects.filter(cliente=account_id).order_by('-data').values('data', 'tipo', 'informacoes', 'valor')[:max(0, 10 - len(api_transacoes))]
 
     return render(request,'safira/dashboard.html', context=context)
