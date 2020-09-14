@@ -27,7 +27,8 @@ python -m pip install -r requirements.txt
 Estando no diretório de mesmo nivel que o arquivo `manage.py`, execute:
 
 ```shell
-python manage.py runserver
+$ python manage.py migrate
+$ python manage.py runserver
 ```
 
 Desta forma, será possível ter acesso à página através do link [http://127.0.0.1:8000](http://127.0.0.1:8000)
