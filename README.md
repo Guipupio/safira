@@ -2,6 +2,7 @@
 A Safira é uma assistente financeira virtual do Safra que por meio do uso de técnicas de inteligência artificial traça um perfil de investidor personalizado, de acordo com os hábitos de consumo de cada cliente
 
 - Visando proporcionar uma experiência mais ágil, o sistema estará temporariamente disponível em: https://technee-safira.herokuapp.com/
+> Vale ressaltar que o acesso ao sistema pode apresentar uma certa lentidão durante o primeiro acesso, que é devida a hibernação do servidor oferecido pelo Heroku.
 > Para acessar, utilize os mesmos clientes disponíveis nos exemplos da [API](https://github.com/banco-safra/technee) fornecida, que são eles: `00711234511` e `00711234522`. 
 
 ## Dependencias do Projeto
@@ -19,7 +20,7 @@ A Safira é uma assistente financeira virtual do Safra que por meio do uso de t�
 ```shell
 python -m pip install -r requirements.txt
 ```
-> Nota: Recomenda-se o o uso d4e uma [virtualenv](https://virtualenv.pypa.io/en/latest/) visando ambiente isolado para a execução do projeto
+> Nota: Recomenda-se o o uso d4e uma [virtualenv](https://virtualenv.pypa.io/en/latest/) visando ambiente isolado para a execução do projeto. 
 
 ### Execução do projeto
 
@@ -40,7 +41,7 @@ Para fins de demonstração de conceito, visamos a `Safira` como um sistema inte
 
 Como mencionado anteriormente, a realização do login é dada a partir dos dois códigos de clientes presentes nos exemplos da [API](https://github.com/banco-safra/technee) fornecida, que são eles: `00711234511` e `00711234522`. 
 
-Ao clicar em Login, é verificado os dados da conta do cliente utilizando a API. Caso o ClientID um dos dois casos citados a página `/dashboard` é iniciada
+Ao clicar em Login, é verificado os dados da conta do cliente utilizando a API. Caso o ClientID seka um dos dois casos citados a página `/dashboard` é iniciada
 
 
 ### /dashboard
@@ -49,7 +50,7 @@ O Dashboard apresenta os dados da conta do cliente e um historico de transaçõe
 
 - Dados como `Saldo`, `Linha de Crédito`, `Nome` e a `transação mais recente` do cliente são de origem da API disponibilizada para o Hackathon. As demais transações foram Mockadas com o intuito visual e, principalmente, com o objetivo de atuar como insumo para a Inteligência Artificial determinar o perfil do Cliente
 
-- Ao aceitar que a safira analise o perfil de investimento por meio de seus gastos, uma API interna da Safira é requisitada, consolidando o histórico de transações do cliente como insumo do modelo de classificação já treinado e presente no sistema. Ao final do processamento é retornado, para o cliente, o perfil sugerido pela Safira, bem como algumas sugestões de produtos do Banco Safra.
+- Ao aceitar que a Safira analise o perfil de investimento por meio de seus gastos, uma API interna da Safira é requisitada, consolidando o histórico de transações do cliente como insumo do modelo de classificação já treinado e presente no sistema. Ao final do processamento é retornado, para o cliente, o perfil sugerido pela Safira, bem como algumas sugestões de produtos do Banco Safra.
 
 
 ## Aspectos Tecnicos importantes
@@ -66,11 +67,12 @@ safra_api = SafraAPI()
 dados_de_conta = safra_api.dados_conta(client_id)
 ```
 
-## Integração Modelo Dados - BackEnd Aplicação
+### Integração Modelo Dados - BackEnd Aplicação
 - O modelo utilizado no back-end corresponde a um classificador `Random Forest`. O modelo é um objeto Python da classe `sklearn.ensemble.RandomForestClassifier` do pacote `Scikit-learn`. O método princial a ser utilizado é o `modelo.predict()`, o qual retorna uma classificação para um dado cliente. 
 > Para mais detalhes utilize:
 > https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 
-
+### Extração de Features
+- Como entrada para o modelo, os dados de transações de cada usuário são agrupados em diferentes faixas de valores e tipo de transação (i.e., débito ou crédito). Isso é realizado para mapear a frequência em que determinadas transações são realizadas pelo Cliente, o que também contribui para o treinamento do classificador `Random Forest`.
 
 
