@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,92 +7,117 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+ 
     <title>Safira</title>
 </head>
 <body>
 
+    <!------ Style ------->
+
     <style>
-     section{
-         height: 400px;
-     }
-     #capa{
-        display: flex;
-    justify-content: center;
-    align-items: center;
-     }
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
+        section{
+            height: 800px;
+        }
+        #capa{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .btn-azul {
-        display: inline-block;
-        background: #1e2044;
-        padding: 16px;
-        font-size: 12px;
-        line-height: 15px;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: .2px;
-        border-radius: 4px;
-        border: 0;
-        cursor: pointer;
-}
+        .info-footer{
+            display:flex;
+            justify-content: space-around;
+            background: #1e2044;
+            color: #fff;
+            
+        }
 
+        
+        .btn-azul {
+            display: inline-block;
+            background: #1e2044;
+            padding: 16px;
+            font-size: 12px;
+            line-height: 15px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: .2px;
+            border-radius: 4px;
+            border: 0;
+            cursor: pointer;
+        }
+    
+        form{
+            background-color: white;
+            height: 220px;
+            width: 300px;
+            align-items: center;
+            text-align: center;
+            border-radius: 4px;
+            }
+        form button{
+            width: 30%;
+        }
+    
+
+        form label{
+            margin-top: 40px;
+        }
+        #capa{
+            background-image: url('/static/safira/img/safraBoy.png') ;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-position: right;
+        }
     </style>
-
 
     <!------ Menu ------->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#1E2044">
-            <a class="navbar-brand " style="display: flex;color:#242F73" ></a> 
-                <!-- <img src="https://www.safra.com.br/lumis-theme/br/com/bancosafra/safranet/theme/safranet/assets/img/logo-safra.svg" style="width: 400px" alt="" loading="lazy"> -->
-                <h4 class="brand-name" style="MARGIN-LEFT: 12PX; color:white">Safira</h4>
+            <a class="navbar-brand " style="display: flex;color:#242F73"></a>
+            <img src="{% static '/static/safira/img/safiraLogo.svg' %}" style="width: 40px" d-inline-block align-top"
+                alt="" loading="lazy">
+            <h4 class="brand-name" style="MARGIN-LEFT: 12PX; color:white">Safira</h4>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link"  style="color:white" href="#banner">Tecnologia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"  style="color:white"  href="#about">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color:white"  href="#contact">Login</a>
-                    </li>
-                </ul>
-            </div>
+            
         </nav>
     </header>
 
-
    <!------ Bloco ------->
 
-    <section id="capa">
-        <div class="container infos-inicial ">
-            <div class="row align-items-center">
+    <section id="capa" class="containe">
+        
+            <div class="row align-items-center d-flex justify-content-center">
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                      <b><label for="codigo_cliente">Código de cliente</label></b>
-                      <input type="text" class="form-control" required id="codigo_cliente" placeholder="Código do Cliente"name="codigo_cliente" aria-describedby="codigo_help">
+                      <b><label for="codigo_cliente">Informe seu código de cliente:</label></b>
+                      <input style="
+                      margin-top: 20px;
+                      max-width: 280px;
+                      margin-left: 12px;
+                      border-top-style: hidden;
+                      border-right-style: hidden;
+                      border-left-style: hidden;
+                      border-bottom-style: groove;
+                      background-color: #eee;
+                      border-radius: unset;" type="text" class="form-control" required id="codigo_cliente" placeholder="Código do Cliente"name="codigo_cliente" aria-describedby="codigo_help">
                     </div>
                     <button id="btn_login_desktop" class="btn-azul pop-login" title="Clique para fazer login" href="#">Login</button>
                 </form>
 
             </div>
-        </div>
+    
     </section>
 
-
-   
-
-
-    <!------ Bloco ------->
+    <!------ Footer ------->
 
 
-    <footer class=" text-center container d-flex justify-content-center" id="contact" >
-        <div class="row">
+    <footer class=" text-center" id="contact" >
+        <div class="row info-footer">
 
                 <p>Time 18</p>
                 <p>Safira Beta  &copy;</p>
